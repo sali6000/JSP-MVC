@@ -1,4 +1,4 @@
-<Context path="/locationvoitures" docBase="locationvoitures" reloadable="true"
+<Context path="/locationVoitureJSP" docBase="locationVoitureJSP" reloadable="true"
 crossContext="true">
 <!-- maxActive: Maximum number of dB connections in pool. Make sure you
 configure your mysqld max_connections large enough to handle
