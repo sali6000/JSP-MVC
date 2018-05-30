@@ -3,7 +3,7 @@
   <display-name>locationvoituresjsp</display-name>
   <welcome-file-list>
     
-    <welcome-file>View/Index.jsp</welcome-file>
+    <welcome-file>View/index.jsp</welcome-file>
    
   </welcome-file-list>
   <servlet>
