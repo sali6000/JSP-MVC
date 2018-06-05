@@ -1,0 +1,192 @@
+-- -----------------------------------------------------
+-- SUPPRESSION DE LA BD
+-- -----------------------------------------------------
+
+DROP DATABASE locationvoituresjsp;
+
+-- -----------------------------------------------------
+-- SI LA DB N'EST PAS DEJA CREE FAIRE TOUS CE QUI SUIT (CREATION DE LA DB ET DES TABLES)
+-- -----------------------------------------------------
+
+CREATE DATABASE locationvoituresjsp;
+
+-- -----------------------------------------------------
+-- SI LA DB EST DEJA CREE FAIRE TOUS CE QUI SUIT (CREATION DES TABLES)
+-- -----------------------------------------------------
+
+CREATE TABLE Adresse (
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Code_postal varchar(255) NOT NULL,
+    Ville varchar(255) NOT NULL,
+    PRIMARY KEY (Identifiant)
+);
+
+CREATE TABLE Personne (
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Mot_de_passe varchar(255) NOT NULL,
+    Nom varchar(255) NOT NULL,
+    Prenom varchar(255) NOT NULL,
+    Date_de_naissance DATE NOT NULL,
+    Email varchar(255) NOT NULL,
+    Rue varchar(255) NOT NULL,
+    Numero varchar(20) NOT NULL,
+    FK_adresse integer NOT NULL,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_adresse) REFERENCES Adresse(Identifiant)
+);
+
+CREATE TABLE Employer(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Type_de_contrat varchar(255) DEFAULT 'Aucun',
+    PRIMARY KEY (Identifiant)
+);
+
+CREATE TABLE Role(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Admin boolean DEFAULT false,
+    Employer boolean DEFAULT false,
+    Utilisateur boolean DEFAULT false,
+    PRIMARY KEY (Identifiant)
+);
+
+CREATE TABLE Role_Personne(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    FK_role int NOT NULL,
+    FK_personne int NOT NULL,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_role) REFERENCES Role(Identifiant),
+    FOREIGN KEY (FK_personne) REFERENCES Personne(Identifiant)
+);
+
+CREATE TABLE Reservation(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Date_de_reservation DATE NOT NULL,
+    Date_de_retour DATE NOT NULL,
+    Prix float NOT NULL,
+    FK_personne int NOT NULL,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_personne) REFERENCES Personne(Identifiant)
+);
+
+
+CREATE TABLE Facture(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Date_de_facturation DATE NOT NULL,
+    FK_personne int NOT NULL,
+    FK_reservation int NOT NULL,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_personne) REFERENCES Personne(Identifiant),
+    FOREIGN KEY (FK_reservation) REFERENCES Reservation(Identifiant)
+);
+
+CREATE TABLE Agence(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Rue varchar(255) NOT NULL,
+    Numero varchar(20) NOT NULL,
+    FK_adresse int NOT NULL,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_adresse) REFERENCES Adresse(Identifiant)
+);
+
+CREATE TABLE Reservation_Agence(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    FK_agence int NOT NULL,
+    FK_reservation int NOT NULL,
+    Retour boolean DEFAULT false,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_agence) REFERENCES Agence(Identifiant),
+    FOREIGN KEY (FK_reservation) REFERENCES Reservation(Identifiant)
+);
+
+CREATE TABLE Option_Reservation(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Nom varchar(255) NOT NULL,
+    Prix float NOT NULL,
+    Assurance boolean DEFAULT false,
+    PRIMARY KEY (Identifiant)
+);
+
+CREATE TABLE Option_Comprise_Reservation(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    FK_reservation integer NOT NULL,
+    FK_option_reservation integer NOT NULL,
+    Quantite integer DEFAULT 0,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_reservation) REFERENCES Reservation(Identifiant),
+    FOREIGN KEY (FK_option_reservation) REFERENCES Option_Reservation(Identifiant)
+);
+
+CREATE TABLE Categorie(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Nom varchar(255) NOT NULL,
+    PRIMARY KEY (Identifiant)
+);
+
+CREATE TABLE Carburant(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Nom varchar(255) NOT NULL,
+    Prix float NOT NULL,
+    PRIMARY KEY (Identifiant)
+);
+
+CREATE TABLE Voiture(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Nom varchar(255) NOT NULL,
+    Annee integer NOT NULL,
+    Boite_vitesse integer NOT NULL,
+    Prix float NOT NULL,
+    FK_categorie integer NOT NULL,
+    FK_agence integer NOT NULL,
+    FK_carburant integer NOT NULL,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_categorie) REFERENCES Categorie(Identifiant),
+    FOREIGN KEY (FK_agence) REFERENCES Agence(Identifiant),
+    FOREIGN KEY (FK_carburant) REFERENCES Carburant(Identifiant)
+);
+
+CREATE TABLE Reservation_Voiture(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    FK_reservation integer NOT NULL,
+    FK_voiture integer NOT NULL,
+    Quantite integer default 0,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_reservation) REFERENCES Reservation(Identifiant),
+    FOREIGN KEY (FK_voiture) REFERENCES Voiture(Identifiant)
+);
+
+CREATE TABLE Option_Voiture(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    Nom varchar(255) NOT NULL,
+    Prix float NOT NULL,
+    PRIMARY KEY (Identifiant)
+);
+
+CREATE TABLE Option_Comprise_Voiture(
+    Identifiant int NOT NULL AUTO_INCREMENT,
+    FK_voiture integer NOT NULL,
+    FK_option_voiture integer NOT NULL,
+    Quantite integer DEFAULT 0,
+    PRIMARY KEY (Identifiant),
+    FOREIGN KEY (FK_voiture) REFERENCES Voiture(Identifiant),
+    FOREIGN KEY (FK_option_voiture) REFERENCES Option_Voiture(Identifiant)
+);
+
+
+-- -------------------------------------------------
+-- Effectuer des INSERTS
+-- -------------------------------------------------
+
+USE locationvoituresjsp;
+
+INSERT INTO Adresse (Code_postal, Ville) VALUES ('6000', 'Charleroi');
+INSERT INTO Personne (Mot_de_passe, Nom, Prenom, Date_de_naissance, Email, FK_adresse) VALUES ('080590','Fernando', 'Salieri','1990-05-08',"salieri@gmail.com",1);
+
+-- -------------------------------------------------
+-- Effectuer REQUETE SUR UNE FOREIGN KEY
+-- -------------------------------------------------
+
+USE locationvoituresjsp;
+
+SELECT Ville, Code_postal
+FROM personne inner join adresse on personne.FK_adresse = adresse.Identifiant
+WHERE personne.FK_adresse = 1;
