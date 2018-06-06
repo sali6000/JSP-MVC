@@ -43,9 +43,8 @@ CREATE TABLE Employer(
 
 CREATE TABLE Role(
     Identifiant int NOT NULL AUTO_INCREMENT,
-    Admin boolean DEFAULT false,
-    Employer boolean DEFAULT false,
-    Utilisateur boolean DEFAULT false,
+    Nom varchar(255) NOT NULL,
+    Actif boolean DEFAULT false,
     PRIMARY KEY (Identifiant)
 );
 

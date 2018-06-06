@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 05 juin 2018 à 21:10
+-- Généré le :  mer. 06 juin 2018 à 23:04
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.0.23
 
@@ -253,9 +253,8 @@ CREATE TABLE IF NOT EXISTS `reservation_voiture` (
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `Identifiant` int(11) NOT NULL AUTO_INCREMENT,
-  `Admin` tinyint(1) DEFAULT '0',
-  `Employer` tinyint(1) DEFAULT '0',
-  `Utilisateur` tinyint(1) DEFAULT '0',
+  `Nom` varchar(255) NOT NULL,
+  `Actif` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`Identifiant`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
