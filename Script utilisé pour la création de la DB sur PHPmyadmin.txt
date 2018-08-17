@@ -169,23 +169,3 @@ CREATE TABLE Option_Comprise_Voiture(
     FOREIGN KEY (FK_voiture) REFERENCES Voiture(Identifiant),
     FOREIGN KEY (FK_option_voiture) REFERENCES Option_Voiture(Identifiant)
 );
-
-
--- -------------------------------------------------
--- Effectuer des INSERTS
--- -------------------------------------------------
-
-USE locationvoituresjsp;
-
-INSERT INTO Adresse (Code_postal, Ville) VALUES ('6000', 'Charleroi');
-INSERT INTO Personne (Mot_de_passe, Nom, Prenom, Date_de_naissance, Email, FK_adresse) VALUES ('080590','Fernando', 'Salieri','1990-05-08',"salieri@gmail.com",1);
-
--- -------------------------------------------------
--- Effectuer REQUETE SUR UNE FOREIGN KEY
--- -------------------------------------------------
-
-USE locationvoituresjsp;
-
-SELECT Ville, Code_postal
-FROM personne inner join adresse on personne.FK_adresse = adresse.Identifiant
-WHERE personne.FK_adresse = 1;
