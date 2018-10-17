@@ -11,20 +11,22 @@ import javax.persistence.Persistence;
  */
 public final class EMF {
 	
-	private static EntityManagerFactory emfInstance =
-	        Persistence.createEntityManagerFactory("locationvoituresjsp");
+	private static EntityManagerFactory emfInstance = Persistence.createEntityManagerFactory("locationvoituresjsp");
 
     private EMF() {}
 
-    public static EntityManagerFactory getEMF() {
+    public static EntityManagerFactory get() 
+    {
         return emfInstance;
     }
     
-    public static EntityManager getEM() {
+    public static EntityManager getEM() 
+    {
         return emfInstance.createEntityManager();
     }
  
  /*	Create EntityManager in others classes
+  * 
   * EntityManager em = EMF.get().createEntityManager();
   * try {
   *     // ... do stuff with em ...

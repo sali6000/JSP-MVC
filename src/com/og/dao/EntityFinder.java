@@ -3,8 +3,6 @@ package com.og.dao;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-
 /**
  * 
  * @author Renaud DIANA

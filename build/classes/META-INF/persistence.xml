@@ -3,17 +3,17 @@
 	<persistence-unit name="locationvoituresjsp"  transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>java:comp/env/jdbc/locationvoituresjsp</jta-data-source>
-		<class>model.Adresse</class>
-		<class>model.Agence</class>
-		<class>model.Carburant</class>
-		<class>model.Categorie</class>
-		<class>model.Employer</class>
-		<class>model.Facture</class>
-		<class>model.OptionReservation</class>
-		<class>model.OptionVoiture</class>
-		<class>model.Personne</class>
-		<class>model.Reservation</class>
-		<class>model.Role</class>
-		<class>model.Voiture</class>
+		<class>com.og.model.Adresse</class>
+		<class>com.og.model.Agence</class>
+		<class>com.og.model.Carburant</class>
+		<class>com.og.model.Categorie</class>
+		<class>com.og.model.Employer</class>
+		<class>com.og.model.Facture</class>
+		<class>com.og.model.OptionReservation</class>
+		<class>com.og.model.OptionVoiture</class>
+		<class>com.og.model.Personne</class>
+		<class>com.og.model.Reservation</class>
+		<class>com.og.model.Role</class>
+		<class>com.og.model.Voiture</class>
 	</persistence-unit>
 </persistence>
